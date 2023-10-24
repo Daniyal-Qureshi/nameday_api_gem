@@ -1,38 +1,32 @@
 # frozen_string_literal: true
 
-require_relative "lib/nameday_api/version"
+require_relative 'lib/nameday_api/version'
 
 Gem::Specification.new do |spec|
-  spec.name = "nameday_api"
+  spec.name = 'nameday_api'
   spec.version = NamedayApi::VERSION
-  spec.authors = ["Daniyal Qureshi"]
-  spec.email = ["daniyalqureshi.cs@gmail.com"]
+  spec.authors = ['Daniyal Qureshi']
+  spec.email = ['daniyalqureshi.cs@gmail.com']
 
-  spec.summary = "none"
-  spec.description = "none"
-  spec.homepage = "none"
-  spec.required_ruby_version = ">= 2.6.0"
+  spec.summary = 'A Ruby gem for fetching nameday information.'
+  spec.description = 'NamedayApi is a Ruby gem that provides a simple interface to fetch nameday information from the "nameday.abalin.net" API.'
+  spec.homepage = 'https://github.com/Daniyal-Qureshi/nameday_api_gem'
+  spec.required_ruby_version = '>= 2.6.0'
 
-  spec.metadata["allowed_push_host"] = "none"
+  spec.metadata['allowed_push_host'] = 'https://rubygems.org'
 
-  spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/Daniyal-Qureshi/nameday_api_gem"
-  spec.metadata["changelog_uri"] = "https://github.com/Daniyal-Qureshi/nameday_api_gem"
+  spec.metadata['homepage_uri'] = spec.homepage
+  spec.metadata['source_code_uri'] = 'https://github.com/Daniyal-Qureshi/nameday_api_gem' # Correct the source code URL
+  spec.metadata['changelog_uri'] = 'https://github.com/Daniyal-Qureshi/nameday_api_gem/blob/main/CHANGELOG.md' # Correct the changelog URL
 
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+  spec.license = 'MIT'
+
   spec.files = Dir.chdir(__dir__) do
     `git ls-files -z`.split("\x0").reject do |f|
       (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|travis|circleci)|appveyor)})
     end
   end
-  spec.bindir = "exe"
+  spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
-
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
-
-  # For more information and examples about making a new gem, check out our
-  # guide at: https://bundler.io/guides/creating_gem.html
+  spec.require_paths = ['lib']
 end
