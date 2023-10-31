@@ -6,13 +6,11 @@ require 'webmock/rspec'
 BASE_URL = 'https://nameday.abalin.net/api/V1'
 
 RSpec.describe NamedayApi do
-  include NamedayApi
-
   describe '.today' do
     it 'fetches namedays for today' do
       url = "#{BASE_URL}/today"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 1, "month": 1 }, "namedays": { "us": "John" } }')
-      response = today
+      response = NamedayApi.today
 
       expect(response['dates']['day']).to eq(1)
       expect(response['dates']['month']).to eq(1)
@@ -23,7 +21,7 @@ RSpec.describe NamedayApi do
       url = "#{BASE_URL}/today?country=us"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 1, "month": 1 }, "namedays": { "us": "John" } }')
 
-      response = today('us')
+      response = NamedayApi.today('us')
 
       expect(response['dates']['day']).to eq(1)
       expect(response['dates']['month']).to eq(1)
@@ -34,7 +32,7 @@ RSpec.describe NamedayApi do
       url = "#{BASE_URL}/today?timezone=America/New_York"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 1, "month": 1 }, "namedays": { "us": "John" } }')
 
-      response = today(nil, 'America/New_York')
+      response = NamedayApi.today(nil, 'America/New_York')
 
       expect(response['dates']['day']).to eq(1)
       expect(response['dates']['month']).to eq(1)
@@ -47,7 +45,7 @@ RSpec.describe NamedayApi do
       url = "#{BASE_URL}/yesterday"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 31, "month": 12 }, "namedays": { "us": "John" } }')
 
-      response = yesterday
+      response = NamedayApi.yesterday
 
       expect(response['dates']['day']).to eq(31)
       expect(response['dates']['month']).to eq(12)
@@ -58,7 +56,7 @@ RSpec.describe NamedayApi do
       url = "#{BASE_URL}/yesterday?country=us"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 31, "month": 12 }, "namedays": { "us": "John" } }')
 
-      response = yesterday('us')
+      response = NamedayApi.yesterday('us')
 
       expect(response['dates']['day']).to eq(31)
       expect(response['dates']['month']).to eq(12)
@@ -69,7 +67,7 @@ RSpec.describe NamedayApi do
       url = "#{BASE_URL}/yesterday?timezone=America/New_York"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 31, "month": 12 }, "namedays": { "us": "John" } }')
 
-      response = yesterday(nil, 'America/New_York')
+      response = NamedayApi.yesterday(nil, 'America/New_York')
 
       expect(response['dates']['day']).to eq(31)
       expect(response['dates']['month']).to eq(12)
@@ -82,7 +80,7 @@ RSpec.describe NamedayApi do
       url = "#{BASE_URL}/tomorrow"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 1, "month": 1 }, "namedays": { "us": "John" } }')
 
-      response = tomorrow
+      response = NamedayApi.tomorrow
 
       expect(response['dates']['day']).to eq(1)
       expect(response['dates']['month']).to eq(1)
@@ -93,7 +91,7 @@ RSpec.describe NamedayApi do
       url = "#{BASE_URL}/tomorrow?country=us"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 1, "month": 1 }, "namedays": { "us": "John" } }')
 
-      response = tomorrow('us')
+      response = NamedayApi.tomorrow('us')
 
       expect(response['dates']['day']).to eq(1)
       expect(response['dates']['month']).to eq(1)
@@ -104,7 +102,7 @@ RSpec.describe NamedayApi do
       url = "#{BASE_URL}/tomorrow?timezone=America/New_York"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 1, "month": 1 }, "namedays": { "us": "John" } }')
 
-      response = tomorrow(nil, 'America/New_York')
+      response = NamedayApi.tomorrow(nil, 'America/New_York')
 
       expect(response['dates']['day']).to eq(1)
       expect(response['dates']['month']).to eq(1)
@@ -117,7 +115,7 @@ RSpec.describe NamedayApi do
       url = "#{BASE_URL}/getdate?day=1&month=1"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 1, "month": 1 }, "namedays": { "us": "John" } }')
 
-      response = specific_day(1, 1)
+      response = NamedayApi.specific_day(1, 1)
 
       expect(response['dates']['day']).to eq(1)
       expect(response['dates']['month']).to eq(1)
@@ -128,7 +126,7 @@ RSpec.describe NamedayApi do
       url = "#{BASE_URL}/getdate?day=1&month=1&country=us"
       stub_request(:get, url).to_return(body: '{ "dates": { "day": 1, "month": 1 }, "namedays": { "us": "John" } }')
 
-      response = specific_day(1, 1, 'us')
+      response = NamedayApi.specific_day(1, 1, 'us')
 
       expect(response['dates']['day']).to eq(1)
       expect(response['dates']['month']).to eq(1)
@@ -149,7 +147,7 @@ RSpec.describe NamedayApi do
                     { "day": 24, "month": 6, "name": "Jan" }]
                   }')
 
-      response = search_by_name(name, country_code)
+      response = NamedayApi.search_by_name(name, country_code)
 
       expect(response['calendar']).to eq('cz')
       expect(response['results']).to be_an(Array)
@@ -168,7 +166,7 @@ RSpec.describe NamedayApi do
       stub_request(:get,
                    url).to_return(body: '{ "calendar": "us", "results": [{ "day": 1, "month": 1, "name": "John" }] }')
 
-      response = search_by_name(name, country_code)
+      response = NamedayApi.search_by_name(name, country_code)
 
       expect(response['calendar']).to eq('us')
       expect(response['results']).to be_an(Array)
